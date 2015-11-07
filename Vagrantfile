@@ -12,7 +12,15 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "base"
+  config.vm.box = "centos-6.7"
+  config.vm.box_url = "http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box"
+
+  config.vm.provision :chef_client do |chef|
+  	chef.chef_server_url = "https://api.chef.io/organizations/daily"
+	chef.validation_key_path = "./.chef/daily-validator.pem"
+	chef.validation_client_name = "daily-validator"
+	chef.node_name = "shashank-node"
+  end
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
